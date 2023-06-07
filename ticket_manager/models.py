@@ -15,7 +15,12 @@ class User(AbstractUser):
 class Site(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='owner')
+    users = models.ManyToManyField(User, related_name='user')
+
+    def __str__(self):
+        return self.name
 
 
 class Ticket(models.Model):
@@ -24,3 +29,6 @@ class Ticket(models.Model):
     status = models.PositiveSmallIntegerField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
