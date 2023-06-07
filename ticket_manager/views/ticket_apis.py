@@ -24,4 +24,4 @@ class SiteTicketListView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Ticket.objects.filter(site_id=self.kwargs['site_id'])
+        return Ticket.objects.filter(site_id=self.kwargs['site_id'], creator=user)
